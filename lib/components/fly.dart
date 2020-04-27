@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 import 'package:flutterappfly/components/callout.dart';
+import 'package:flutterappfly/components/life.dart';
 import 'package:flutterappfly/game-loop.dart';
 import 'package:flutterappfly/view.dart';
 
@@ -11,6 +12,8 @@ class Fly {
   bool isDead = false;
   bool isOffScreen = false;
 
+  int life = 1;
+
   List<Sprite> flyingSprite;
   Sprite deadSprite;
   double flyingSpriteIndex = 0;
@@ -19,6 +22,7 @@ class Fly {
 
   Offset targetLocation;
   Callout callout;
+  Life lifeS;
 
   //Anchor
 
@@ -26,6 +30,7 @@ class Fly {
     // espaço de toque
     setTargetLocation();
     callout = Callout(this);
+    lifeS = Life(this);
   }
 
   void setTargetLocation() {
@@ -37,15 +42,18 @@ class Fly {
   }
 
   void render(Canvas canvas) {
+    
     if(isDead) {
-      deadSprite.renderRect(canvas, flyRect.inflate(2));
+      deadSprite.renderRect(canvas, flyRect.inflate(flyRect.width/2));
     }
     else {
-      flyingSprite[flyingSpriteIndex.toInt()].renderRect(canvas, flyRect.inflate(2));
+      flyingSprite[flyingSpriteIndex.toInt()].renderRect(canvas, flyRect.inflate(flyRect.width/2));
       if (gameLoop.activeView == View.playing) {
         callout.render(canvas);
+        lifeS.render(canvas);
       }
     }
+
   }
 
   void update(double time) {
@@ -73,6 +81,7 @@ class Fly {
       }
 
       callout.update(time);
+      lifeS.update(time);
     }
   }
 
@@ -81,7 +90,10 @@ class Fly {
       if (gameLoop.soundButton.isEnabled) {
         Flame.audio.play('sfx/ouch' + (gameLoop.rnd.nextInt(11) + 1).toString() + '.ogg');
       }
-      isDead = true;
+      life--;
+      if(life == 0) {
+        isDead = true;
+      }
 
       if (gameLoop.activeView == View.playing) {
         gameLoop.score += 1;

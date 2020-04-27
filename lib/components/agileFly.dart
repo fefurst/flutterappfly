@@ -19,7 +19,7 @@ class AgileFly extends Fly {
     flyRect = Rect.fromLTWH(
       x, 
       y, 
-      gameLoop.tileSize * 1.5, 
-      gameLoop.tileSize * 1.5);
+      gameLoop.tileSize * 1, 
+      gameLoop.tileSize * 1);
   }
 }

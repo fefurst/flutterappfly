@@ -17,8 +17,10 @@ class HungryFly extends Fly {
     flyRect = Rect.fromLTWH(
       x, 
       y, 
-      gameLoop.tileSize * 1.65, 
-      gameLoop.tileSize * 1.65);
+      gameLoop.tileSize * 1.1, 
+      gameLoop.tileSize * 1.1);
+
+      life = 2;
   }
 
 }

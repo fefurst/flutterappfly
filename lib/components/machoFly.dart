@@ -18,8 +18,10 @@ class MachoFly extends Fly {
     flyRect = Rect.fromLTWH(
       x, 
       y, 
-      gameLoop.tileSize * 2.0, 
-      gameLoop.tileSize * 2.0);
+      gameLoop.tileSize * 1.35, 
+      gameLoop.tileSize * 1.35);
+
+    life = 3;
   }
 
 }
